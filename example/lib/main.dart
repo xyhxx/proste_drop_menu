@@ -6,7 +6,8 @@ import 'demo.dart';
 
 void main() {
   runApp(const Application());
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   const SystemUiOverlayStyle style = SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
   );
@@ -36,7 +37,8 @@ class MyBody extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () {
-                Navigator.push(context, CupertinoPageRoute(builder: (_) => Demo()));
+                Navigator.push(
+                    context, CupertinoPageRoute(builder: (_) => Demo()));
               },
               child: Text('demo'),
             ),
