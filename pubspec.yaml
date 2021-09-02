@@ -1,6 +1,6 @@
 name: proste_drop_menu
 description: Simple and convenient fluent dropmenu package
-version: 0.0.1-dev
+version: 0.0.2-dev
 homepage: https://github.com/xyhxx/proste_drop_menu
 
 environment:

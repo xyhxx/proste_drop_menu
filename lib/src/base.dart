@@ -13,8 +13,7 @@ class ProsteDropMenu extends StatefulWidget {
     required this.menus,
   })  : assert(headers.length > 0, 'headers length must be greater than 0'),
         assert(menus.length > 0, 'menus length must be greater than 0'),
-        assert(menus.length == headers.length,
-            'the length of menus and headers must be equal');
+        assert(menus.length == headers.length, 'the length of menus and headers must be equal');
 
   final EdgeInsets? padding;
   final Color? backgroundColor;
@@ -27,7 +26,8 @@ class ProsteDropMenu extends StatefulWidget {
 }
 
 class _ProsteDropMenuState extends State<ProsteDropMenu> {
-  late ProsteDropMenuController _controller;
+  ProsteDropMenuController? _localController;
+  ProsteDropMenuController get _controller => widget.controller ?? _localController!;
   OverlayEntry? _overlay;
   GlobalKey _key = GlobalKey();
 
@@ -115,7 +115,7 @@ class _ProsteDropMenuState extends State<ProsteDropMenu> {
   @override
   void initState() {
     super.initState();
-    _controller = widget.controller ?? ProsteDropMenuController();
+    if (widget.controller == null) _localController = ProsteDropMenuController();
     _controller.addListener(_toggleEvent);
   }
 
@@ -123,7 +123,7 @@ class _ProsteDropMenuState extends State<ProsteDropMenu> {
   void dispose() {
     _hide();
     _controller.removeListener(_toggleEvent);
-    _controller.dispose();
+    _localController?.dispose();
     super.dispose();
   }
 
@@ -131,8 +131,7 @@ class _ProsteDropMenuState extends State<ProsteDropMenu> {
   Widget build(BuildContext context) {
     return Container(
       key: _key,
-      padding: widget.padding ??
-          const EdgeInsets.symmetric(vertical: 12, horizontal: 4),
+      padding: widget.padding ?? const EdgeInsets.symmetric(vertical: 12, horizontal: 4),
       color: widget.backgroundColor,
       width: double.infinity,
       child: Container(
@@ -141,10 +140,7 @@ class _ProsteDropMenuState extends State<ProsteDropMenu> {
             final h = widget.headers[k];
             bool isSelect = k == _controller.selectItem && _controller.isShow;
             final icon = Icon(
-              h.icon ??
-                  (isSelect
-                      ? Icons.keyboard_arrow_up
-                      : Icons.keyboard_arrow_down),
+              h.icon ?? (isSelect ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down),
               color: isSelect ? h.selectColor : h.color,
             );
             ProsteDropMenuItem item = widget.menus[k];
@@ -153,8 +149,7 @@ class _ProsteDropMenuState extends State<ProsteDropMenu> {
               child: GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTap: () {
-                  assert(item.builder != null || item.tigger != null,
-                      'item.builder and item.toggle cannot all be null');
+                  assert(item.builder != null || item.tigger != null, 'item.builder and item.toggle cannot all be null');
                   if (item.tigger != null) {
                     _controller.hideMenu();
                     item.tigger!.call(context);
