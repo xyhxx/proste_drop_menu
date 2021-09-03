@@ -35,7 +35,6 @@ class _DemoState extends State<Demo> {
       ),
       body: Column(
         children: [
-          TextField(),
           GestureDetector(
             onTap: () {
               print('other');
@@ -47,30 +46,39 @@ class _DemoState extends State<Demo> {
           ),
           ProsteDropMenu(
             headers: [
-              ProsteDropMenuHeaderItem(label: '下拉'),
+              ProsteDropMenuHeaderItem(
+                label: '下拉',
+                selectColor: Colors.red,
+                selectStyle: TextStyle(color: Colors.red),
+              ),
               ProsteDropMenuHeaderItem(label: '长文本测试长文本测试'),
               ProsteDropMenuHeaderItem(label: 'drawer'),
             ],
             menus: [
               ProsteDropMenuItem(
-                builder: (_) => Container(
-                  color: Colors.white,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: List.generate(
-                        30,
-                        (index) => Padding(
-                          padding: const EdgeInsets.all(15),
-                          child: Text(index.toString()),
-                        ),
-                      ),
+                backgroundColor: Colors.pink,
+                height: 200,
+                radius: BorderRadius.only(
+                  bottomLeft: Radius.circular(5),
+                  bottomRight: Radius.circular(5),
+                ),
+                child: Column(
+                  children: List.generate(
+                    30,
+                    (index) => Padding(
+                      padding: const EdgeInsets.all(15),
+                      child: Text(index.toString()),
                     ),
                   ),
+                ),
+                builder: (_, c) => SingleChildScrollView(
+                  key: PageStorageKey('single'),
+                  child: c!,
                 ),
               ),
               ProsteDropMenuItem(
                 tigger: (_) {
-                  print('触发');
+                  _key.currentState!.openEndDrawer();
                 },
               ),
               ProsteDropMenuItem(

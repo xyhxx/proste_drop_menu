@@ -8,7 +8,7 @@ class ProsteDropMenuHeaderItem {
     this.color,
     this.selectColor,
     this.size,
-    this.selectText,
+    this.selectStyle,
     this.style,
     this.padding = const EdgeInsets.symmetric(horizontal: 8),
     this.border = const BorderSide(
@@ -23,7 +23,7 @@ class ProsteDropMenuHeaderItem {
   final Color? selectColor;
   final double? size;
   final TextStyle? style;
-  final TextStyle? selectText;
+  final TextStyle? selectStyle;
   final EdgeInsets? padding;
   final BorderSide? border;
 }
