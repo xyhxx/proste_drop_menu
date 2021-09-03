@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:proste_drop_menu/src/menu.dart';
 import './header.dart';
 import './constroller.dart';
+import './observer.dart';
 
 class ProsteDropMenu extends StatefulWidget {
   ProsteDropMenu({
@@ -26,7 +27,7 @@ class ProsteDropMenu extends StatefulWidget {
   _ProsteDropMenuState createState() => _ProsteDropMenuState();
 }
 
-class _ProsteDropMenuState extends State<ProsteDropMenu> {
+class _ProsteDropMenuState extends State<ProsteDropMenu> with RouteAware {
   ProsteDropMenuController? _localController;
   ProsteDropMenuController get _controller =>
       widget.controller ?? _localController!;
@@ -115,6 +116,12 @@ class _ProsteDropMenuState extends State<ProsteDropMenu> {
   }
 
   @override
+  void didPop() {
+    super.didPop();
+    _hide();
+  }
+
+  @override
   void initState() {
     super.initState();
     if (widget.controller == null)
@@ -123,8 +130,15 @@ class _ProsteDropMenuState extends State<ProsteDropMenu> {
   }
 
   @override
+  void didChangeDependencies() {
+    prosteDropMenuObserver.subscribe(this, ModalRoute.of(context) as PageRoute);
+    super.didChangeDependencies();
+  }
+
+  @override
   void dispose() {
     _hide();
+    prosteDropMenuObserver.unsubscribe(this);
     _controller.removeListener(_toggleEvent);
     _localController?.dispose();
     super.dispose();

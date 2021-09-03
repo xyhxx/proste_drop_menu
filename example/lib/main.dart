@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:proste_drop_menu/proste_drop_menu.dart';
 
 import 'demo.dart';
 
@@ -18,7 +19,12 @@ class Application extends StatelessWidget {
   const Application({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: MyBody());
+    return MaterialApp(
+      navigatorObservers: [
+        prosteDropMenuObserver,
+      ],
+      home: MyBody(),
+    );
   }
 }
 
